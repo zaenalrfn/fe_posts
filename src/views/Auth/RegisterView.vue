@@ -1,8 +1,10 @@
 <script setup>
 import { reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import { storeToRefs } from "pinia";
 
-const authStore = useAuthStore();
+const { errors } = storeToRefs(useAuthStore());
+const { authenticate } = useAuthStore();
 
 const formData = reactive({
   name: "",
@@ -12,7 +14,7 @@ const formData = reactive({
 });
 
 const handleSubmit = () => {
-  authStore.authenticate("register", formData);
+  authenticate("register", formData);
 };
 </script>
 
@@ -53,6 +55,9 @@ const handleSubmit = () => {
                 v-model="formData.name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              <div v-if="errors.message.name" class="text-red-500 text-sm">
+                {{ errors.message.name[0] }}
+              </div>
             </div>
           </div>
 
@@ -69,6 +74,9 @@ const handleSubmit = () => {
                 v-model="formData.email"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              <div v-if="errors.message.email" class="text-red-500 text-sm">
+                {{ errors.message.email[0] }}
+              </div>
             </div>
           </div>
 
@@ -89,6 +97,9 @@ const handleSubmit = () => {
                 v-model="formData.password"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
+              <div v-if="errors.message.password" class="text-red-500 text-sm">
+                {{ errors.message.password[0] }}
+              </div>
             </div>
           </div>
 

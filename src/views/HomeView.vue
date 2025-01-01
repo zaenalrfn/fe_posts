@@ -3,6 +3,6 @@
 
 <template>
   <main>
-    <h1>testing</h1>
+    <h1>Latest Post</h1>
   </main>
 </template>

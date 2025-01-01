@@ -1,12 +1,19 @@
 <script setup>
 import { reactive } from "vue";
+import { useAuthStore } from "@/stores/auth";
+
+const authStore = useAuthStore();
 
 const formData = reactive({
   name: "",
   email: "",
   password: "",
-  confirm_password: "",
+  password_confirmation: "",
 });
+
+const handleSubmit = () => {
+  authStore.authenticate("register", formData);
+};
 </script>
 
 <template>
@@ -32,7 +39,7 @@ const formData = reactive({
       </div>
 
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form class="space-y-6" action="#" method="POST">
+        <form @submit.prevent="handleSubmit" class="space-y-6">
           <div>
             <label for="email" class="block text-sm/6 font-medium text-gray-900"
               >Name</label
@@ -42,8 +49,8 @@ const formData = reactive({
                 type="text"
                 name="name"
                 id="name"
-                autocomplete="name"
-                required=""
+                autocomplete="current-name"
+                v-model="formData.name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
@@ -59,7 +66,7 @@ const formData = reactive({
                 name="email"
                 id="email"
                 autocomplete="email"
-                required=""
+                v-model="formData.email"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
@@ -79,7 +86,7 @@ const formData = reactive({
                 name="password"
                 id="password"
                 autocomplete="current-password"
-                required=""
+                v-model="formData.password"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>
@@ -99,7 +106,7 @@ const formData = reactive({
                 name="confirm_password"
                 id="confirm_password"
                 autocomplete="current-confirm_password"
-                required=""
+                v-model="formData.password_confirmation"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
             </div>

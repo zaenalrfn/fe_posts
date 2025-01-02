@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
@@ -14,6 +14,10 @@ const formData = reactive({
 const handleSubmit = () => {
   authenticate("login", formData);
 };
+
+onMounted(() => {
+  errors.value = {};
+});
 </script>
 
 <template>
@@ -49,11 +53,10 @@ const handleSubmit = () => {
                 type="email"
                 name="email"
                 id="email"
-                autocomplete="email"
                 v-model="formData.email"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
-              <div v-if="errors.message.email" class="text-red-500 text-sm">
+              <div v-if="errors.message.email[0]" class="text-red-500 text-sm">
                 {{ errors.message.email[0] }}
               </div>
             </div>
@@ -72,11 +75,13 @@ const handleSubmit = () => {
                 type="password"
                 name="password"
                 id="password"
-                autocomplete="current-password"
                 v-model="formData.password"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
-              <div v-if="errors.message.password" class="text-red-500 text-sm">
+              <div
+                v-if="errors.message.password[0]"
+                class="text-red-500 text-sm"
+              >
                 {{ errors.message.password[0] }}
               </div>
             </div>

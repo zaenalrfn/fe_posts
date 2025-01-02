@@ -19,6 +19,9 @@ onMounted(() => {
           <p class="text-sm text-slate-300">
             Selamat datang {{ authStore.user.name }}
           </p>
+          <RouterLink :to="{ name: 'create-post' }" class="nav-link"
+            >Post baru</RouterLink
+          >
           <form @submit.prevent="authStore.logout">
             <button class="nav-link">Logout</button>
           </form>

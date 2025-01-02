@@ -43,7 +43,6 @@ export const useAuthStore = defineStore("authStore", {
         if (!res.ok) {
           // Update errors jika ada error
           this.errors.message = data.message || {};
-          console.log(this.errors.message);
           return;
         }
 
@@ -66,7 +65,6 @@ export const useAuthStore = defineStore("authStore", {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         const data = await res.json();
-        console.log(data);
         if (res.ok) {
           localStorage.removeItem("token");
           this.user = "";

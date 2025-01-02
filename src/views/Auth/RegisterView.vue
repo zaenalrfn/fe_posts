@@ -1,5 +1,5 @@
 <script setup>
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
@@ -16,6 +16,10 @@ const formData = reactive({
 const handleSubmit = () => {
   authenticate("register", formData);
 };
+
+onMounted(() => {
+  errors.value = {};
+});
 </script>
 
 <template>
@@ -51,7 +55,6 @@ const handleSubmit = () => {
                 type="text"
                 name="name"
                 id="name"
-                autocomplete="current-name"
                 v-model="formData.name"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -70,7 +73,6 @@ const handleSubmit = () => {
                 type="email"
                 name="email"
                 id="email"
-                autocomplete="email"
                 v-model="formData.email"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -93,7 +95,6 @@ const handleSubmit = () => {
                 type="password"
                 name="password"
                 id="password"
-                autocomplete="current-password"
                 v-model="formData.password"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />
@@ -116,7 +117,6 @@ const handleSubmit = () => {
                 type="password"
                 name="confirm_password"
                 id="confirm_password"
-                autocomplete="current-confirm_password"
                 v-model="formData.password_confirmation"
                 class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6"
               />

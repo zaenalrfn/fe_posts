@@ -36,7 +36,6 @@ export const useAuthStore = defineStore("authStore", {
       try {
         const res = await fetch(`/api/${apiRoute}`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(formData),
         });
 
@@ -56,6 +55,26 @@ export const useAuthStore = defineStore("authStore", {
         this.router.push({ name: "home" });
       } catch (error) {
         this.errors.message = { general: ["An unexpected error occurred."] };
+      }
+    },
+
+    // logout user
+    async logout() {
+      try {
+        const res = await fetch("/api/logout", {
+          method: "POST",
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        });
+        const data = await res.json();
+        console.log(data);
+        if (res.ok) {
+          localStorage.removeItem("token");
+          this.user = "";
+          this.errors.message = {};
+          this.router.push({ name: "home" });
+        }
+      } catch (error) {
+        console.log(error);
       }
     },
   },
